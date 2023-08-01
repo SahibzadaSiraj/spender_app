@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1003252785562",
+    "firebase_url": "https://spnder-2bb50-default-rtdb.firebaseio.com",
+    "project_id": "spnder-2bb50",
+    "storage_bucket": "spnder-2bb50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003252785562:android:5f3293c13dc8d21b19da23",
+        "android_client_info": {
+          "package_name": "com.spender.spenderapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003252785562-jqabok0rggchnk9paan6f8ehnfv77m9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-u7_WlQxM0WWSxPyjItZ2TxF4UP1lmZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1003252785562-jqabok0rggchnk9paan6f8ehnfv77m9r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

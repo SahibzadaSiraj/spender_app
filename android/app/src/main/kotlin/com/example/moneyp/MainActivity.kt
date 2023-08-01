@@ -1,0 +1,6 @@
+package com.spender.spenderapp
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
