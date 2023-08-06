@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:moneyp/feature/chat-gpt-api/chat_gpt_api.dart';
 import 'package:moneyp/feature/home/controller/auth_controller.dart';
 import 'package:moneyp/feature/home/controller/home_controller.dart';
 import 'package:moneyp/feature/wallet_onboard/controller/wallet_controller.dart';
 import 'package:moneyp/product/constant/color_settings.dart';
+import 'package:provider/provider.dart';
+
+import 'hanndle_response_chat_gpt.dart';
 
 class ChatGPTUI extends StatefulWidget {
   const ChatGPTUI({super.key});
 
   @override
-  State<ChatGPTUI> createState() => _WalletsPageState();
+  State<ChatGPTUI> createState() => _ChatGPTUIState();
 }
 
-class _WalletsPageState extends State<ChatGPTUI> {
+class _ChatGPTUIState extends State<ChatGPTUI> {
   WalletController walletController = Get.find();
   HomeController homeController = Get.find();
   AuthController authController = Get.find();
@@ -46,6 +50,7 @@ class _WalletsPageState extends State<ChatGPTUI> {
   int value = 0;
   @override
   Widget build(BuildContext context) {
+    final gptController = Provider.of<ChatGPTController>(context);
     return walletController.obx(
         onLoading: Scaffold(
           body: Center(
@@ -71,7 +76,7 @@ class _WalletsPageState extends State<ChatGPTUI> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           image: const DecorationImage(
-                              image: AssetImage("assets/images/logo.png"),
+                              image: AssetImage("assets/images/logosp.png"),
                               fit: BoxFit.cover)),
                     ),
                     // Lottie.asset('assets/onboard_wallet.json',
@@ -137,38 +142,140 @@ class _WalletsPageState extends State<ChatGPTUI> {
                           //         color: ColorSettings.themeColor.shade200),
                           //   ),
                           // ),
-                          Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.only(top: 13),
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            height: MediaQuery.of(context).size.height * 0.09,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: Colors.white,
-                            ),
-                            child: Text(
-                              "Expense Insights and Analytics",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: ColorSettings.themeColor.shade200),
+                          GestureDetector(
+                            onTap: () {
+                              gptController
+                                  .futurePersonalGuide(
+                                      check: true,
+                                      userTransactionList:
+                                          "[{'food':'120£'},{'travel':'200£'},{'shhopping':'120£'},{'other':'120£'}], my total income of this month is 500£",
+                                      userQuery:
+                                          "Expance analytics and insights")
+                                  .then((value) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            HnadlingResponseChatGPT(
+                                              textResponse:
+                                                  "${value.choices![0].message!.content}",
+                                            )));
+                              });
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              margin: const EdgeInsets.only(top: 13),
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              height: MediaQuery.of(context).size.height * 0.09,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white,
+                              ),
+                              child: gptController.loading
+                                  ? Center(
+                                      child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Loading...",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700,
+                                                color: ColorSettings
+                                                    .themeColor.shade200),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          SizedBox(
+                                            width: 30,
+                                            height: 30,
+                                            child: CircularProgressIndicator(
+                                              color: ColorSettings
+                                                  .themeColor.shade200,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ))
+                                  : Text(
+                                      "Expense Insights and Analytics",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorSettings
+                                              .themeColor.shade200),
+                                    ),
                             ),
                           ),
-                          Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.only(top: 13),
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            height: MediaQuery.of(context).size.height * 0.09,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: Colors.white,
-                            ),
-                            child: Text(
-                              "Personalized Recommendations",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: ColorSettings.themeColor.shade200),
+                          GestureDetector(
+                            onTap: () {
+                              gptController
+                                  .futurePersonalGuide(
+                                      check: false,
+                                      userTransactionList:
+                                          "[{'food':'120£'},{'travel':'200£'},{'shhopping':'120£'},{'other':'120£'}], my total income of this month is 500£",
+                                      userQuery:
+                                          "future recommendation and personal guidance ")
+                                  .then((value) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            HnadlingResponseChatGPT(
+                                              textResponse:
+                                                  "${value.choices![0].message!.content}",
+                                            )));
+                              });
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              margin: const EdgeInsets.only(top: 13),
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              height: MediaQuery.of(context).size.height * 0.09,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white,
+                              ),
+                              child: gptController.loading1
+                                  ? Center(
+                                      child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Loading...",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700,
+                                                color: ColorSettings
+                                                    .themeColor.shade200),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          SizedBox(
+                                            width: 30,
+                                            height: 30,
+                                            child: CircularProgressIndicator(
+                                              color: ColorSettings
+                                                  .themeColor.shade200,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ))
+                                  : Text(
+                                      "Personalized Recommendations",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorSettings
+                                              .themeColor.shade200),
+                                    ),
                             ),
                           ),
                         ],

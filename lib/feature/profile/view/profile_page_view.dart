@@ -1,4 +1,3 @@
-
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttermoji/fluttermoji.dart';
@@ -85,7 +84,7 @@ class ProfilePage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 40),
                 child: Align(
                   alignment: Alignment.topCenter,
-                  child: Text('MoneyP',
+                  child: Text('Spender',
                       style: GoogleFonts.pacifico(
                           textStyle: TextStyle(
                               color: Colors.white.withOpacity(0.4),
@@ -97,7 +96,7 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 12, right: 12,bottom: 40),
+            padding: const EdgeInsets.only(left: 12, right: 12, bottom: 40),
             child: FractionallySizedBox(
               alignment: Alignment.bottomCenter,
               heightFactor: 0.8,
@@ -186,7 +185,8 @@ class ProfilePage extends StatelessWidget {
                               width: MediaQuery.of(context).size.width * 0.9,
                               height: MediaQuery.of(context).size.height * 0.07,
                               decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 245, 245, 245),
+                                  color:
+                                      const Color.fromARGB(255, 245, 245, 245),
                                   borderRadius: BorderRadius.circular(10)),
                               child: Padding(
                                   padding: const EdgeInsets.only(
@@ -208,7 +208,8 @@ class ProfilePage extends StatelessWidget {
                                             nameController.clear();
                                           },
                                           style: GoogleFonts.poppins(),
-                                          decoration: const InputDecoration.collapsed(
+                                          decoration:
+                                              const InputDecoration.collapsed(
                                             hintText: 'Full Name',
                                             border: InputBorder.none,
                                           ),
@@ -221,7 +222,8 @@ class ProfilePage extends StatelessWidget {
                               width: MediaQuery.of(context).size.width * 0.9,
                               height: MediaQuery.of(context).size.height * 0.07,
                               decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 245, 245, 245),
+                                  color:
+                                      const Color.fromARGB(255, 245, 245, 245),
                                   borderRadius: BorderRadius.circular(10)),
                               child: Padding(
                                   padding: const EdgeInsets.only(
@@ -240,7 +242,8 @@ class ProfilePage extends StatelessWidget {
                                           controller: emailController,
                                           style: GoogleFonts.poppins(),
                                           enabled: false,
-                                          decoration: const InputDecoration.collapsed(
+                                          decoration:
+                                              const InputDecoration.collapsed(
                                             hintText: 'E-Mail',
                                             border: InputBorder.none,
                                           ),
