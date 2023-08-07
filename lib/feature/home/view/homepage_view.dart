@@ -342,7 +342,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           IconButton(
                             padding: EdgeInsets.only(left: size.width * 0.05),
-                            icon: const Icon(Icons.event),
+                            icon: const Icon(Icons.badge_outlined),
                             onPressed: () {
                               Get.toNamed('/events');
                             },

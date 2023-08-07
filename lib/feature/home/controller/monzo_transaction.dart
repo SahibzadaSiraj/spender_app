@@ -24,7 +24,7 @@ class MonzoController with ChangeNotifier {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization':
-          'Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJlYiI6IjBKL3FNYy9iaWhqb0d0VjY1Z2xnIiwianRpIjoiYWNjdG9rXzAwMDBBWURyOXVEQVNkSVRRdlE3bzkiLCJ0eXAiOiJhdCIsInYiOiI2In0.XhQH5mv5rHqGGaFJVDktscW1RP2Mse3ff1rVcmLcLGAReamXK2Gs0PYVyidbC5X4roor_C571I37-56LkhDDqw',
+          'Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJlYiI6IlVDcmx5MmhMRnk2NDVibnNFdUdqIiwianRpIjoiYWNjdG9rXzAwMDBBWVVFVnUyZEJEOFJwWGoxT2IiLCJ0eXAiOiJhdCIsInYiOiI2In0.jprISybQ3kWPeY1ZevHW6R7El7WsVuNXzaVHRABW6oHT6Ybp9GH6_Ig82t76si-jJfC20MqyHKAe2IHfILFLbA',
     });
     print("response.body: ${response.body}");
     if (response.statusCode == 200) {
@@ -33,6 +33,7 @@ class MonzoController with ChangeNotifier {
         transactionList.add(TransactionModel.fromJson(v));
       });
       notifyListeners();
+      print("response.body: ${transactionList.length}");
       return transactionList;
     } else {
       notifyListeners();

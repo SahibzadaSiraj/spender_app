@@ -12,7 +12,7 @@ class OnBoardModels {
   static final List<OnBoardModel> onBoardModels = [
     OnBoardModel(
         'Track Your Spend',
-        'Do you have trouble in tracking and managing your money expenses ? Take note of your money expenses with moneyp app, track them easily',
+        'Do you have trouble in tracking and managing your money expenses ? Take note of your money expenses with spender app, track them easily',
         'onboard_1'),
     OnBoardModel(
         'Calculate Your Spend',

@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kartal/kartal.dart';
 import 'package:moneyp/feature/home/controller/auth_controller.dart';
+import 'package:moneyp/feature/home/controller/monzo_transaction.dart';
 import 'package:moneyp/product/constant/color_settings.dart';
+import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
 class SignUp extends GetWidget<AuthController> {
@@ -14,8 +16,10 @@ class SignUp extends GetWidget<AuthController> {
   final TextEditingController _nameController = TextEditingController();
 
   SignUp({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final monzo = Provider.of<MonzoController>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -141,7 +145,8 @@ class SignUp extends GetWidget<AuthController> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       style: GoogleFonts.poppins(fontSize: 16),
                       obscureText: true,
-                      decoration: const InputDecoration(hintText: "Confirm Password"),
+                      decoration:
+                          const InputDecoration(hintText: "Confirm Password"),
                     ))
                   ],
                 ),
@@ -170,20 +175,23 @@ class SignUp extends GetWidget<AuthController> {
                     if (_emailController.text != "" &&
                         _passwordController.text != "" &&
                         _nameController.text != "") {
-                      controller.signUp(_emailController.text,
-                          _passwordController.text, _nameController.text);
-                    }
-                    else{
+                      controller.signUp(
+                          _emailController.text,
+                          _passwordController.text,
+                          _nameController.text,
+                          monzo);
+                    } else {
                       QuickAlert.show(
-                        context: context,
-                        type: QuickAlertType.warning,
-                        text:
-                            'Please make sure that you fill out all your information completely.');
+                          context: context,
+                          type: QuickAlertType.warning,
+                          text:
+                              'Please make sure that you fill out all your information completely.');
                     }
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)), backgroundColor: ColorSettings.themeColor.shade200,
+                          borderRadius: BorderRadius.circular(10)),
+                      backgroundColor: ColorSettings.themeColor.shade200,
                       minimumSize: Size(MediaQuery.of(context).size.width, 50)),
                   child: Text("Sign Up",
                       style: GoogleFonts.poppins(

@@ -9,8 +9,6 @@ import 'package:moneyp/feature/home/controller/auth_controller.dart';
 import 'package:moneyp/feature/login/view/sign_up_view.dart';
 import 'package:moneyp/product/constant/color_settings.dart';
 
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-
 // ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -74,7 +72,8 @@ class LoginPage extends StatelessWidget {
                       Expanded(
                           child: TextField(
                         controller: _usernameController,
-                        decoration: const InputDecoration(hintText: "Enter email"),
+                        decoration:
+                            const InputDecoration(hintText: "Enter email"),
                         style: GoogleFonts.poppins(fontSize: 16),
                       ))
                     ],
@@ -91,8 +90,8 @@ class LoginPage extends StatelessWidget {
                           child: TextField(
                               controller: _passwordController,
                               obscureText: true,
-                              decoration:
-                                  const InputDecoration(hintText: "Enter password"),
+                              decoration: const InputDecoration(
+                                  hintText: "Enter password"),
                               style: GoogleFonts.poppins(fontSize: 16)))
                     ],
                   ),
@@ -103,7 +102,7 @@ class LoginPage extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      Get.to(() =>  ForgotPasswordView());
+                      Get.to(() => ForgotPasswordView());
                     },
                     child: Text("Forgot Password?",
                         style: GoogleFonts.poppins(fontSize: 16)),
@@ -117,7 +116,8 @@ class LoginPage extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)), backgroundColor: ColorSettings.themeColor.shade200,
+                        borderRadius: BorderRadius.circular(10)),
+                    backgroundColor: ColorSettings.themeColor.shade200,
                     minimumSize: Size(MediaQuery.of(context).size.width, 50)),
                 child: Text("Login",
                     style: GoogleFonts.poppins(
@@ -144,20 +144,20 @@ class LoginPage extends StatelessWidget {
                   )),
                 ],
               ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: SignInButton(
-                      Buttons.Google,
-                      text: "Sign in with Google",
-                      onPressed: () async {
-                        await controller.signInWithGoogle();
-                      },
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisSize: MainAxisSize.max,
+              //   children: [
+              //     Expanded(
+              //       child: SignInButton(
+              //         Buttons.Google,
+              //         text: "Sign in with Google",
+              //         onPressed: () async {
+              //           await controller.signInWithGoogle();
+              //         },
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Align(
                 alignment: Alignment.center,
                 child: RichText(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 import 'package:moneyp/feature/home/controller/home_controller.dart';
 import 'package:moneyp/feature/home/model/incomes_model.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
@@ -19,7 +18,8 @@ class ListItem extends StatelessWidget {
       required this.listItemTotal,
       required this.listItemIcon,
       required this.listItemColor,
-      required this.listItemId})
+      required this.listItemId,
+      required this.date})
       : super(key: key);
   final String listItemType;
   final String listItemTitle;
@@ -28,6 +28,7 @@ class ListItem extends StatelessWidget {
   final String listItemTotal;
   final String listItemColor;
   final String listItemId;
+  final String date;
 
   HomeController homeController = Get.find();
 
@@ -63,6 +64,8 @@ class ListItem extends StatelessWidget {
         listItemTotal: itemModel.expenseTotal!,
         listItemType: itemModel.expenseType!,
         listItemId: itemModel.uid!,
+        date:
+            "${itemModel.expenseDay}-${itemModel.expenseMonth}-${itemModel.expenseYear}",
       ),
     );
   }
@@ -71,13 +74,16 @@ class ListItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: ListItem(
-          listItemId: itemModel.uid!,
-          listItemColor: itemModel.incomesColor!,
-          listItemDescription: itemModel.incomesDescription!,
-          listItemIcon: itemModel.incomesIcon!,
-          listItemTitle: itemModel.incomesTitle!,
-          listItemTotal: itemModel.incomesAmount!,
-          listItemType: itemModel.type!),
+        listItemId: itemModel.uid!,
+        listItemColor: itemModel.incomesColor!,
+        listItemDescription: itemModel.incomesDescription!,
+        listItemIcon: itemModel.incomesIcon!,
+        listItemTitle: itemModel.incomesTitle!,
+        listItemTotal: itemModel.incomesAmount!,
+        listItemType: itemModel.type!,
+        date:
+            "${itemModel.incomesDay}-${itemModel.incomesMonth}-${itemModel.incomesYear}",
+      ),
     );
   }
 
@@ -230,49 +236,51 @@ class ListItem extends StatelessWidget {
                       height: 40,
                       color: Colors.grey,
                     ),
-                    GestureDetector(
-                        onTap: () async {
-                          if (homeController.isExpensesOnTap.value) {
-                            String amount = (double.parse(homeController
-                                        .wallets[homeController
-                                            .currentWalletIndex.value]
-                                        .expenseTotal!) -
-                                    double.parse(listItemTotal))
-                                .toStringAsFixed(2);
-                            String budget = (double.parse(homeController
-                                        .wallets[homeController
-                                            .currentWalletIndex.value]
-                                        .budget!) +
-                                    double.parse(listItemTotal))
-                                .toStringAsFixed(2);
-                            await homeController.walletUpdateOnTransaction(
-                                budget, amount, 'expenseTotal');
-                            await homeController.transactionDelete(
-                                'expenses', listItemId);
-                          } else {
-                            String amount = (double.parse(homeController
-                                        .wallets[homeController
-                                            .currentWalletIndex.value]
-                                        .incomesTotal!) -
-                                    double.parse(listItemTotal))
-                                .toStringAsFixed(2);
-                            String budget = (double.parse(homeController
-                                        .wallets[homeController
-                                            .currentWalletIndex.value]
-                                        .budget!) -
-                                    double.parse(listItemTotal))
-                                .toStringAsFixed(2);
-                            await homeController.walletUpdateOnTransaction(
-                                budget, amount, 'incomesTotal');
-                            await homeController.transactionDelete(
-                                'incomes', listItemId);
-                          }
-                        },
-                        child: LottieBuilder.asset(
-                          'assets/delete_icon.json',
-                          width: 45,
-                          height: 45,
-                        ))
+                    info('Date', date),
+
+                    // GestureDetector(
+                    //     onTap: () async {
+                    //       if (homeController.isExpensesOnTap.value) {
+                    //         String amount = (double.parse(homeController
+                    //                     .wallets[homeController
+                    //                         .currentWalletIndex.value]
+                    //                     .expenseTotal!) -
+                    //                 double.parse(listItemTotal))
+                    //             .toStringAsFixed(2);
+                    //         String budget = (double.parse(homeController
+                    //                     .wallets[homeController
+                    //                         .currentWalletIndex.value]
+                    //                     .budget!) +
+                    //                 double.parse(listItemTotal))
+                    //             .toStringAsFixed(2);
+                    //         await homeController.walletUpdateOnTransaction(
+                    //             budget, amount, 'expenseTotal');
+                    //         await homeController.transactionDelete(
+                    //             'expenses', listItemId);
+                    //       } else {
+                    //         String amount = (double.parse(homeController
+                    //                     .wallets[homeController
+                    //                         .currentWalletIndex.value]
+                    //                     .incomesTotal!) -
+                    //                 double.parse(listItemTotal))
+                    //             .toStringAsFixed(2);
+                    //         String budget = (double.parse(homeController
+                    //                     .wallets[homeController
+                    //                         .currentWalletIndex.value]
+                    //                     .budget!) -
+                    //                 double.parse(listItemTotal))
+                    //             .toStringAsFixed(2);
+                    //         await homeController.walletUpdateOnTransaction(
+                    //             budget, amount, 'incomesTotal');
+                    //         await homeController.transactionDelete(
+                    //             'incomes', listItemId);
+                    //       }
+                    //     },
+                    //     child: LottieBuilder.asset(
+                    //       'assets/delete_icon.json',
+                    //       width: 45,
+                    //       height: 45,
+                    //     ))
                   ],
                 ),
               )

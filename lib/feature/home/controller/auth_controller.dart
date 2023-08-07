@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:moneyp/feature/home/controller/monzo_transaction.dart';
 
 import '../../../services/firestoredb.dart';
 
@@ -39,7 +40,10 @@ class AuthController extends GetxService {
     }
   }
 
-  void signIn(String email, password) async {
+  void signIn(
+    String email,
+    password,
+  ) async {
     // change(null, status: RxStatus.loading());
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
@@ -49,39 +53,44 @@ class AuthController extends GetxService {
     }
   }
 
-  void createUser(String uid, String email, String name) async {
+  void createUser(String uid, String email, String name,
+      MonzoController monzoController) async {
     await db.collection("users").doc(uid).set({
       'email': email,
       'name': name,
     });
+    await monzoController.getAllTransaction().then((value) {
+      print("transaction list: ${value.length}");
+    });
   }
 
-  signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+  // signInWithGoogle() async {
+  //   try {
+  //     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+  //     final GoogleSignInAuthentication? googleAuth =
+  //         await googleUser?.authentication;
 
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
+  //     final credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth?.accessToken,
+  //       idToken: googleAuth?.idToken,
+  //     );
 
-      UserCredential user =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-      createUser(user.user!.uid, user.user!.email!, user.user!.displayName!);
-    } catch (e) {
-      rethrow;
-    }
-  }
+  //     UserCredential user =
+  //         await FirebaseAuth.instance.signInWithCredential(credential);
+  //     createUser(user.user!.uid, user.user!.email!, user.user!.displayName!,MonzoController);
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
 
-  void signUp(String email, password, name) async {
+  void signUp(
+      String email, password, name, MonzoController monzoController) async {
     try {
       walletIsEmpty.value = true;
       UserCredential result = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      createUser(result.user!.uid, email, name);
+      createUser(result.user!.uid, email, name, monzoController);
     } catch (e) {
       Get.snackbar('About SignUp', 'Sign Up Message',
           titleText: const Text('Sign Up Failed.'));
@@ -96,5 +105,4 @@ class AuthController extends GetxService {
       rethrow;
     }
   }
-
 }
